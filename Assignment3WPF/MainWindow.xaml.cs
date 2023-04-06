@@ -34,6 +34,7 @@ namespace Assignment3WPF
         {
             InitializeComponent();
 
+            // List of grades to pick from
             List<Grading> gradings = new List<Grading>
             {
                 Grading.A,
@@ -44,17 +45,27 @@ namespace Assignment3WPF
                 Grading.F
             };
 
+            // Assign local storage
             Students = dx.Students.Local;
             Courses = dx.Courses.Local;
             Grades = dx.Grades.Local;
 
+
+            // Load all data because the database is small
             dx.Students.Load();
             dx.Courses.Load();
             dx.Grades.Load();
 
+            // Load students and order by student name.
             studentList.DataContext = Students.OrderBy(s => s.Studentname);
+            // Load courses for combobox
             courseSelection.DataContext = Courses.ToObservableCollection();
+            // Load grades for combobox
             gradeSelection.DataContext = gradings;
+
+            // load all entries of grades equal to F
+            failedCourses.DataContext = Grades
+                .Where(g => Enum.Parse<Grading>(g.Grade1) == Grading.F);
         }
         private void studentSearchText_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -77,7 +88,7 @@ namespace Assignment3WPF
 
         private void gradeSelection_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Grading selectedGrade = (Grading) gradeSelection.SelectedItem;
+            Grading selectedGrade = (Grading)  gradeSelection.SelectedItem;
 
             studentGrades.DataContext = Grades
                 .Where(g => Enum.Parse<Grading>(g.Grade1) >= selectedGrade);

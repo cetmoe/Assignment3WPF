@@ -63,6 +63,20 @@
                     </ListView>
                 </Grid>
             </TabItem>
+            <TabItem Header="Failed" >
+                <Grid>
+                    <ListView Name="failedCourses" ItemsSource="{Binding}" Height="356" VerticalAlignment="Top" HorizontalAlignment="Center" Width="794" Margin="0,40,0,0">
+                        <ListView.View>
+                            <GridView>
+                                <GridView.Columns>
+                                    <GridViewColumn Width="100" Header="Student" DisplayMemberBinding="{Binding Path=Student.Studentname}" />
+                                    <GridViewColumn Width="100" Header="Course" DisplayMemberBinding="{Binding Path=Coursecode}" />
+                                </GridView.Columns>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>
