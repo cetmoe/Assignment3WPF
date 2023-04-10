@@ -38,6 +38,8 @@
                                 <GridView.Columns>
                                     <GridViewColumn Width="100" Header="Student" DisplayMemberBinding="{Binding Path=Studentname}" />
                                     <GridViewColumn Width="100" Header="Grade" DisplayMemberBinding="{Binding Path=Grade1}" />
+                                    <GridViewColumn Width="100" Header="Course" DisplayMemberBinding="{Binding Path=Coursename}" />
+                                    <GridViewColumn Width="100" Header="Code" DisplayMemberBinding="{Binding Path=Coursecode}" />
                                 </GridView.Columns>
                             </GridView>
                         </ListView.View>
@@ -54,9 +56,10 @@
                         <ListView.View>
                             <GridView>
                                 <GridView.Columns>
-                                    <GridViewColumn Width="100" Header="Student" DisplayMemberBinding="{Binding Path=Student.Studentname}" />
+                                    <GridViewColumn Width="100" Header="Student" DisplayMemberBinding="{Binding Path=Studentname}" />
                                     <GridViewColumn Width="100" Header="Grade" DisplayMemberBinding="{Binding Path=Grade1}" />
-                                    <GridViewColumn Width="100" Header="Course" DisplayMemberBinding="{Binding Path=Coursecode}" />
+                                    <GridViewColumn Width="100" Header="Course" DisplayMemberBinding="{Binding Path=Coursename}" />
+                                    <GridViewColumn Width="100" Header="Code" DisplayMemberBinding="{Binding Path=Coursecode}" />
                                 </GridView.Columns>
                             </GridView>
                         </ListView.View>
@@ -65,16 +68,23 @@
             </TabItem>
             <TabItem Header="Failed" >
                 <Grid>
-                    <ListView Name="failedCourses" ItemsSource="{Binding}" Height="356" VerticalAlignment="Top" HorizontalAlignment="Center" Width="794" Margin="0,40,0,0">
+                    <ListView Name="failedCourses" ItemsSource="{Binding}" Height="396" VerticalAlignment="Top" HorizontalAlignment="Center" Width="794">
                         <ListView.View>
                             <GridView>
                                 <GridView.Columns>
                                     <GridViewColumn Width="100" Header="Student" DisplayMemberBinding="{Binding Path=Student.Studentname}" />
-                                    <GridViewColumn Width="100" Header="Course" DisplayMemberBinding="{Binding Path=Coursecode}" />
+                                    <GridViewColumn Width="100" Header="Course" DisplayMemberBinding="{Binding Path=Coursename}" />
+                                    <GridViewColumn Width="100" Header="Code" DisplayMemberBinding="{Binding Path=Coursecode}" />
                                 </GridView.Columns>
                             </GridView>
                         </ListView.View>
                     </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Edit Student Participation">
+                <Grid>
+                    <TextBox Name="studentCourseSelection" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="20" Margin="10,10,0,0"/>
+                    
                 </Grid>
             </TabItem>
         </TabControl>

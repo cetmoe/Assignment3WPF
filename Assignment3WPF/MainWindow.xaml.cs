@@ -4,17 +4,8 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Assignment3WPF
 {
@@ -76,21 +67,24 @@ namespace Assignment3WPF
 
         private void courseSelection_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Course selectedCourse = (Course) courseSelection.SelectedItem;
+            Course selectedCourse = (Course)courseSelection.SelectedItem;
             studentsOfCourse.DataContext = Grades
                 .Join(Courses,
                 gr => gr.Coursecode,
                 cr => cr.Coursecode,
-                (go, co) => new { go.Student.Studentname, go.Grade1, go.Coursecode })
+                (go, co) => new { go.Student.Studentname, go.Grade1, go.Coursecode, co.Coursename })
                 .Where(co => co.Coursecode.Contains(selectedCourse.Coursecode));
-
         }
 
         private void gradeSelection_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Grading selectedGrade = (Grading)  gradeSelection.SelectedItem;
+            Grading selectedGrade = (Grading)gradeSelection.SelectedItem;
 
             studentGrades.DataContext = Grades
+                .Join(Courses,
+                gr => gr.Coursecode,
+                cr => cr.Coursecode,
+                (go, co) => new { go.Student.Studentname, go.Grade1, go.Coursecode, co.Coursename })
                 .Where(g => Enum.Parse<Grading>(g.Grade1) >= selectedGrade);
         }
     }
