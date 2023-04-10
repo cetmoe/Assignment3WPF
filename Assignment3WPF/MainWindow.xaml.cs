@@ -50,12 +50,22 @@ namespace Assignment3WPF
             // Load students and order by student name.
             studentList.DataContext = Students.OrderBy(s => s.Studentname);
             // Load courses for combobox
-            courseSelection.DataContext = Courses.ToObservableCollection();
+            courseSelection.DataContext = courseSelectionEdit.DataContext = Courses.ToObservableCollection();
+            courseSelection.SelectedItem = courseSelectionEdit.SelectedItem = Courses.FirstOrDefault();
+
             // Load grades for combobox
-            gradeSelection.DataContext = gradings;
+            gradeSelection.DataContext = gradeSelectionEdit.DataContext = gradings;
+            gradeSelection.SelectedItem = gradeSelectionEdit.SelectedItem = Grading.A;
+
+            studentSelectionEdit.DataContext = Students.ToObservableCollection();
+            studentSelectionEdit.SelectedItem = Students.FirstOrDefault();
 
             // load all entries of grades equal to F
             failedCourses.DataContext = Grades
+                .Join(Courses,
+                gr => gr.Coursecode,
+                cr => cr.Coursecode,
+                (go, co) => new { go.Student.Studentname, go.Grade1, go.Coursecode, co.Coursename })
                 .Where(g => Enum.Parse<Grading>(g.Grade1) == Grading.F);
         }
         private void studentSearchText_TextChanged(object sender, TextChangedEventArgs e)
@@ -86,6 +96,54 @@ namespace Assignment3WPF
                 cr => cr.Coursecode,
                 (go, co) => new { go.Student.Studentname, go.Grade1, go.Coursecode, co.Coursename })
                 .Where(g => Enum.Parse<Grading>(g.Grade1) >= selectedGrade);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Student selectedStudent = (Student)studentSelectionEdit.SelectedItem;
+            Grading selectedGrade = (Grading)gradeSelectionEdit.SelectedItem;
+            Course selectedCourse = (Course)courseSelectionEdit.SelectedItem;
+
+            Grade? gradeFound = dx.Grades
+                .Where(x => x.Studentid == selectedStudent.Id && x.Coursecode == selectedCourse.Coursecode)
+                .FirstOrDefault();
+
+            if (gradeFound != null)
+            {
+                gradeFound.Grade1 = selectedGrade.ToString();
+                dx.SaveChanges();
+            }
+            else
+            {
+                Grade grade = new()
+                {
+                    Studentid = selectedStudent.Id,
+                    Coursecode = selectedCourse.Coursecode,
+                    Grade1 = selectedGrade.ToString(),
+                    CoursecodeNavigation = selectedCourse,
+                    Student = selectedStudent
+                };
+
+                dx.Grades.Add(grade);
+                dx.SaveChanges();
+            }
+        }
+
+        private void remStudentFrCourse_Click(object sender, RoutedEventArgs e)
+        {
+            Student selectedStudent = (Student)studentSelectionEdit.SelectedItem;
+            Grading selectedGrade = (Grading)gradeSelectionEdit.SelectedItem;
+            Course selectedCourse = (Course)courseSelectionEdit.SelectedItem;
+
+            Grade? gradeFound = dx.Grades
+                .Where(x => x.Studentid == selectedStudent.Id && x.Coursecode == selectedCourse.Coursecode)
+                .FirstOrDefault();
+
+            if (gradeFound != null)
+            {
+                dx.Remove(gradeFound);
+                dx.SaveChanges();
+            }
         }
     }
 }

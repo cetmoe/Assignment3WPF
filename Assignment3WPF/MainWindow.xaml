@@ -49,9 +49,10 @@
             <TabItem Header="Grades">
                 <Grid>
                     <TextBlock Text="Select Grade:" Height="25" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,8,0,0" />
-                    <ComboBox Name="gradeSelection" 
-                          ItemsSource="{Binding}"
-                              Width="200" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,6,0,0" SelectionChanged="gradeSelection_SelectionChanged"/>
+                    <ComboBox Name="gradeSelection"
+                              ItemsSource="{Binding}"
+                              Width="200" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,6,0,0" 
+                              SelectionChanged="gradeSelection_SelectionChanged"/>
                     <ListView Name="studentGrades" ItemsSource="{Binding}" Height="356" VerticalAlignment="Top" HorizontalAlignment="Center" Width="794" Margin="0,40,0,0">
                         <ListView.View>
                             <GridView>
@@ -72,7 +73,7 @@
                         <ListView.View>
                             <GridView>
                                 <GridView.Columns>
-                                    <GridViewColumn Width="100" Header="Student" DisplayMemberBinding="{Binding Path=Student.Studentname}" />
+                                    <GridViewColumn Width="100" Header="Student" DisplayMemberBinding="{Binding Path=Studentname}" />
                                     <GridViewColumn Width="100" Header="Course" DisplayMemberBinding="{Binding Path=Coursename}" />
                                     <GridViewColumn Width="100" Header="Code" DisplayMemberBinding="{Binding Path=Coursecode}" />
                                 </GridView.Columns>
@@ -83,8 +84,22 @@
             </TabItem>
             <TabItem Header="Edit Student Participation">
                 <Grid>
-                    <TextBox Name="studentCourseSelection" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="20" Margin="10,10,0,0"/>
-                    
+                    <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Student Name:" VerticalAlignment="Top" RenderTransformOrigin="-0.29,-0.592" FontSize="20"/>
+                    <ComboBox 
+                        Name="studentSelectionEdit" 
+                        ItemsSource="{Binding}" 
+                        DisplayMemberPath="Studentname" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,37,0,0" FontSize="20"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,148,0,0" TextWrapping="Wrap" Text="Select Course:" VerticalAlignment="Top" RenderTransformOrigin="-0.29,-0.592" FontSize="20"/>
+                    <ComboBox 
+                        Name="courseSelectionEdit" 
+                        ItemsSource="{Binding}" 
+                        DisplayMemberPath="Coursecode" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,180,0,0" FontSize="20"/>
+                    <Button Name="addStudentToCourse" Content="Add/update to Course" HorizontalAlignment="Left" Margin="420,146,0,0" VerticalAlignment="Top" Click="Button_Click" FontSize="20"/>
+                    <Button Name="remStudentFrCourse" Content="Remove from Course" HorizontalAlignment="Left" Margin="426,220,0,0" VerticalAlignment="Top" FontSize="20" Click="remStudentFrCourse_Click"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,274,0,0" TextWrapping="Wrap" Text="Select Grade:" VerticalAlignment="Top" RenderTransformOrigin="-0.29,-0.592" FontSize="20"/>
+                    <ComboBox Name="gradeSelectionEdit" 
+                          ItemsSource="{Binding}"
+                              Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,306,0,0" FontSize="20"/>
                 </Grid>
             </TabItem>
         </TabControl>
