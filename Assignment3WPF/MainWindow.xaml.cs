@@ -66,7 +66,14 @@ namespace Assignment3WPF
                 gr => gr.Coursecode,
                 cr => cr.Coursecode,
                 (go, co) => new { go.Student.Studentname, go.Grade1, go.Coursecode, co.Coursename })
-                .Where(g => Enum.Parse<Grading>(g.Grade1) == Grading.F);
+                .Where(g =>
+                {
+                    if (Enum.TryParse(g.Grade1, true, out Grading temp))
+                    {
+                        return temp == Grading.F;
+                    }
+                    return false;
+                });
         }
         private void studentSearchText_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -95,7 +102,14 @@ namespace Assignment3WPF
                 gr => gr.Coursecode,
                 cr => cr.Coursecode,
                 (go, co) => new { go.Student.Studentname, go.Grade1, go.Coursecode, co.Coursename })
-                .Where(g => Enum.Parse<Grading>(g.Grade1) >= selectedGrade);
+                .Where(g =>
+                {
+                    if (Enum.TryParse(g.Grade1, true, out Grading temp))
+                    {
+                        return temp >= selectedGrade;
+                    }
+                    return false;
+                });
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
